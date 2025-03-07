@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moving Square</title>
+    <title>Moving Square with Maze</title>
     <style>
         body {
             margin: 0;
@@ -31,11 +31,23 @@
             top: 0;
             left: 0;
         }
+
+        .wall {
+            position: absolute;
+            background-color: black;
+        }
+
     </style>
 </head>
 <body>
     <div id="container">
         <div id="square"></div>
+        <!-- Example maze walls -->
+        <div class="wall" style="top: 0; left: 50px; width: 150px; height: 10px;"></div>
+        <div class="wall" style="top: 50px; left: 150px; width: 10px; height: 150px;"></div>
+        <div class="wall" style="top: 150px; left: 50px; width: 100px; height: 10px;"></div>
+        <div class="wall" style="top: 100px; left: 250px; width: 10px; height: 150px;"></div>
+        <div class="wall" style="top: 250px; left: 50px; width: 100px; height: 10px;"></div>
     </div>
 
     <script>
@@ -50,24 +62,60 @@
 
         const moveSpeed = 10;
 
+        const walls = document.querySelectorAll('.wall');
+
+        // Check if the square collides with any wall
+        function checkCollision(newX, newY) {
+            for (let wall of walls) {
+                const wallRect = wall.getBoundingClientRect();
+                const squareRect = {
+                    top: newY,
+                    left: newX,
+                    right: newX + squareSize,
+                    bottom: newY + squareSize
+                };
+
+                if (
+                    squareRect.right > wallRect.left &&
+                    squareRect.left < wallRect.right &&
+                    squareRect.bottom > wallRect.top &&
+                    squareRect.top < wallRect.bottom
+                ) {
+                    return true; // Collision detected
+                }
+            }
+            return false; // No collision
+        }
+
         document.addEventListener('keydown', (event) => {
+            let newX = posX;
+            let newY = posY;
+
             switch(event.key) {
                 case 'ArrowUp':
-                    posY = Math.max(posY - moveSpeed, 0);
+                    newY = Math.max(posY - moveSpeed, 0);
                     break;
                 case 'ArrowDown':
-                    posY = Math.min(posY + moveSpeed, containerHeight - squareSize);
+                    newY = Math.min(posY + moveSpeed, containerHeight - squareSize);
                     break;
                 case 'ArrowLeft':
-                    posX = Math.max(posX - moveSpeed, 0);
+                    newX = Math.max(posX - moveSpeed, 0);
                     break;
                 case 'ArrowRight':
-                    posX = Math.min(posX + moveSpeed, containerWidth - squareSize);
+                    newX = Math.min(posX + moveSpeed, containerWidth - squareSize);
                     break;
             }
+
+            // If no collision, update the position
+            if (!checkCollision(newX, newY)) {
+                posX = newX;
+                posY = newY;
+            }
+
             square.style.top = posY + 'px';
             square.style.left = posX + 'px';
         });
     </script>
 </body>
 </html>
+
