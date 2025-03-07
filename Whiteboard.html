@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Whiteboard</title>
+  <style>
+    /* Style equivalent to tkinter packing */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+    #tool_frame, #color_frame {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      background-color: #f0f0f0;
+    }
+    #canvas {
+      border: 1px solid #ccc;
+      display: block;
+    }
+    button {
+      border: none;
+      cursor: pointer;
+    }
+    input[type="range"] {
+      margin: 0 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Toolbar frame -->
+  <div id="tool_frame">
+    <!-- Clear button -->
+    <button id="clear_btn">Clear</button>
+    <!-- Pen size scale -->
+    <label for="penSize">Pen Size</label>
+    <input type="range" id="penSize" min="1" max="20" value="5">
+  </div>
+
+  <!-- Canvas -->
+  <canvas id="canvas" width="800" height="500" style="background-color: white;"></canvas>
+
+  <!-- Color palette -->
+  <div id="color_frame">
+    <!-- Color buttons will be added dynamically -->
+  </div>
+
+  <script>
+    // Global variables equivalent to the Python globals
+    var current_color = 'black';
+    var lastx = null, lasty = null;
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var pen_size = document.getElementById('penSize');
+
+    // Function: start_draw
+    function start_draw(event) {
+        // Initialize lastx and lasty to the click position
+        lastx = event.offsetX;
+        lasty = event.offsetY;
+    }
+
+    // Function: draw
+    function draw(event) {
+        // Do nothing if lastx or lasty is None
+        if (lastx === null || lasty === null) {
+            return;
+        }
+        // Draw a line from the last coordinates to the current position
+        ctx.beginPath();
+        ctx.moveTo(lastx, lasty);
+        ctx.lineTo(event.offsetX, event.offsetY);
+        ctx.strokeStyle = current_color;
+        ctx.lineWidth = pen_size.value;
+        ctx.lineCap = "round"; // capstyle ROUND equivalent
+        ctx.stroke();
+        // Update lastx and lasty to the current position
+        lastx = event.offsetX;
+        lasty = event.offsetY;
+    }
+
+    // Function: stop_draw
+    function stop_draw(event) {
+        // Reset lastx and lasty when mouse button is released
+        lastx = null;
+        lasty = null;
+    }
+
+    // Function: set_color
+    function set_color(new_color) {
+        current_color = new_color;
+    }
+
+    // Function: clear_canvas
+    function clear_canvas() {
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Main window setup equivalent
+    window.onload = function() {
+        document.title = "Whiteboard";
+        // Set the main window geometry equivalent (handled by the browser)
+
+        // Toolbar elements are already added in HTML
+
+        // Clear button event binding
+        var clear_btn = document.getElementById('clear_btn');
+        clear_btn.addEventListener('click', clear_canvas);
+
+        // Canvas event bindings
+        canvas.addEventListener('mousedown', start_draw);  // When mouse button is pressed, start drawing
+        canvas.addEventListener('mousemove', draw);  // When mouse is moved with the button pressed, draw
+        canvas.addEventListener('mouseup', stop_draw);
+        canvas.addEventListener('mouseout', stop_draw); // Stop drawing when mouse leaves canvas
+
+        // Color palette setup
+        var color_frame = document.getElementById('color_frame');
+        var colors = [
+            'black', 'red', 'green', 'blue', 'white',
+            'yellow', 'orange', 'purple', 'pink', 'brown',
+            'cyan', 'magenta', 'lime', 'teal', 'indigo'
+        ];
+        for (var i = 0; i < colors.length; i++) {
+            (function(c) {
+                var btn = document.createElement('button');
+                btn.style.backgroundColor = c;
+                btn.style.width = "30px";
+                btn.style.height = "30px";
+                btn.style.margin = "2px";
+                btn.addEventListener('click', function() { set_color(c); });
+                color_frame.appendChild(btn);
+            })(colors[i]);
+        }
+    };
+  </script>
+</body>
+</html>
