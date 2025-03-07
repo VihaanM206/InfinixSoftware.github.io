@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch the Falling Items Game</title>
+</head>
+<body>
+    <script>
+        // Create HTML structure dynamically
+document.body.innerHTML = `
+    <h1 style="text-align: center;">Catch the Falling Items Game</h1>
+    <canvas id="gameCanvas" width="800" height="600" style="display: block; margin: 0 auto;"></canvas>
+`;
+
+// Get canvas context
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+// Game variables
+let basketWidth = 100;
+let basketHeight = 20;
+let basketX = (canvas.width - basketWidth) / 2;
+let basketSpeed = 7;
+let fallingItemRadius = 10;
+let fallingItemX = Math.random() * canvas.width;
+let fallingItemY = 0;
+let fallingItemSpeed = 3;
+let score = 0;
+let gameOver = false;
+
+// Event listener for basket movement
+let rightPressed = false;
+let leftPressed = false;
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') rightPressed = true;
+    if (e.key === 'ArrowLeft') leftPressed = true;
+});
+
+document.addEventListener('keyup', (e) => {
+    if (e.key === 'ArrowRight') rightPressed = false;
+    if (e.key === 'ArrowLeft') leftPressed = false;
+});
+
+// Draw the basket
+function drawBasket() {
+    ctx.fillStyle = '#0077cc';
+    ctx.fillRect(basketX, canvas.height - basketHeight, basketWidth, basketHeight);
+}
+
+// Draw the falling item
+function drawFallingItem() {
+    ctx.beginPath();
+    ctx.arc(fallingItemX, fallingItemY, fallingItemRadius, 0, Math.PI * 2);
+    ctx.fillStyle = '#ff0000';
+    ctx.fill();
+    ctx.closePath();
+}
+
+// Update game objects
+function updateGame() {
+    if (gameOver) {
+        ctx.font = '30px Arial';
+        ctx.fillStyle = '#ff0000';
+        ctx.fillText('Game Over! Score: ' + score, canvas.width / 2 - 150, canvas.height / 2);
+        return;
+    }
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Move the basket
+    if (rightPressed && basketX + basketWidth < canvas.width) {
+        basketX += basketSpeed;
+    }
+    if (leftPressed && basketX > 0) {
+        basketX -= basketSpeed;
+    }
+
+    // Move the falling item
+    fallingItemY += fallingItemSpeed;
+
+    // Check if the falling item hits the basket
+    if (
+        fallingItemY + fallingItemRadius > canvas.height - basketHeight &&
+        fallingItemX > basketX &&
+        fallingItemX < basketX + basketWidth
+    ) {
+        score++;
+        resetFallingItem();
+    }
+
+    // Check if the falling item hits the ground
+    if (fallingItemY + fallingItemRadius > canvas.height) {
+        gameOver = true;
+    }
+
+    // Draw objects
+    drawBasket();
+    drawFallingItem();
+
+    // Display score
+    ctx.font = '20px Arial';
+    ctx.fillStyle = '#000000';
+    ctx.fillText('Score: ' + score, 10, 30);
+
+    // Request the next frame
+    requestAnimationFrame(updateGame);
+}
+
+// Reset the falling item after it is caught or hits the ground
+function resetFallingItem() {
+    fallingItemX = Math.random() * canvas.width;
+    fallingItemY = 0;
+}
+
+// Start the game loop
+updateGame();
+
+    </script>
+</body>
+</html>
