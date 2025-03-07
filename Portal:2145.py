@@ -9,7 +9,7 @@ print(" -Portals2145- ")
 time.sleep(1)
 print("A game made by Vihaan Manipatruni")
 time.sleep(1)
-a=random.randint(1,1000000)
+a=random.randint(1,10000000)
 b=random.randint(1,1000000)
 print(f"Your ID is {a}")
 print("""An Universal Portal Agent knocks down the door to your Enviorment Controlled Dome.
