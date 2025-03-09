@@ -30,13 +30,27 @@
         button:hover {
             background-color: #45a049;
         }
+        select {
+            margin: 8px 0;
+            padding: 10px;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
     <div id="ui">
-        <button onclick="addObject('cube')">Add Cube</button>
-        <button onclick="addObject('sphere')">Add Sphere</button>
+        <select id="objectSelect">
+            <option value="cube">Cube</option>
+            <option value="sphere">Sphere</option>
+            <option value="cone">Cone</option>
+            <option value="cylinder">Cylinder</option>
+        </select>
+        <button onclick="addObject()">Add Object</button>
         <button onclick="resetScene()">Reset Scene</button>
+        <button onclick="scaleObject(1.2)">Scale Up</button>
+        <button onclick="scaleObject(0.8)">Scale Down</button>
+        <button onclick="rotateObject()">Rotate Selected Object</button>
+        <button onclick="changeBackgroundColor()">Change Background Color</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -67,16 +81,21 @@
         let selectedObject = null;
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
-        
-        // Function to add a cube or sphere based on type
-        function addObject(type) {
+
+        // Function to add a 3D object based on selected type
+        function addObject() {
+            const objectType = document.getElementById("objectSelect").value;
             let geometry, material;
 
-            // Create geometry and material for the object
-            if (type === 'cube') {
+            // Create geometry and material for the selected object
+            if (objectType === 'cube') {
                 geometry = new THREE.BoxGeometry();
-            } else if (type === 'sphere') {
+            } else if (objectType === 'sphere') {
                 geometry = new THREE.SphereGeometry(0.5, 32, 32);
+            } else if (objectType === 'cone') {
+                geometry = new THREE.ConeGeometry(0.5, 1, 32);
+            } else if (objectType === 'cylinder') {
+                geometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 32);
             }
             material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff });
 
@@ -88,8 +107,29 @@
         // Function to reset the scene (remove all objects)
         function resetScene() {
             scene.children = [gridHelper, light, ambientLight]; // Keep the grid and lights
-            // Remove all other objects
             renderer.renderLists.dispose();
+        }
+
+        // Function to scale the selected object
+        function scaleObject(factor) {
+            if (selectedObject) {
+                selectedObject.scale.set(selectedObject.scale.x * factor, selectedObject.scale.y * factor, selectedObject.scale.z * factor);
+            }
+        }
+
+        // Function to rotate the selected object
+        function rotateObject() {
+            if (selectedObject) {
+                selectedObject.rotation.x += 0.1;
+                selectedObject.rotation.y += 0.1;
+            }
+        }
+
+        // Function to change the background color of the scene
+        function changeBackgroundColor() {
+            const colors = ['#f0f0f0', '#87CEEB', '#FFD700', '#FF6347', '#98FB98'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            renderer.setClearColor(randomColor);
         }
 
         // Handle pointer down (mousedown/touchstart)
@@ -151,4 +191,3 @@
     </script>
 </body>
 </html>
-
