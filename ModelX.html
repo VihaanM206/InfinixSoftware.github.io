@@ -40,6 +40,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/controls/OrbitControls.js"></script> <!-- OrbitControls.js -->
     <script>
         // Set up the scene, camera, and renderer
         const scene = new THREE.Scene();
@@ -58,6 +59,9 @@
         // Grid helper
         const gridHelper = new THREE.GridHelper(10, 10);
         scene.add(gridHelper);
+
+        // Initialize OrbitControls to enable camera rotation
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
         // Variables for object interaction
         let selectedObject = null;
@@ -125,6 +129,11 @@
         // Animation loop
         function animate() {
             requestAnimationFrame(animate);
+
+            // Update controls for camera rotation
+            controls.update(); // Only needed if controls.enableDamping or controls.auto-rotation is enabled
+
+            // Render the scene
             renderer.render(scene, camera);
         }
 
@@ -142,3 +151,4 @@
     </script>
 </body>
 </html>
+
