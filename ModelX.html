@@ -5,29 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Modeling Program - Move Objects</title>
     <style>
-        body { margin: 0; }
-        canvas { display: block; }
+        body { margin: 0; font-family: Arial, sans-serif; }
+        canvas { display: block; background-color: #f0f0f0; }
         #ui {
             position: absolute;
-            top: 10px;
+            top: 70px;
             left: 10px;
             background: rgba(255, 255, 255, 0.8);
-            padding: 10px;
-            border-radius: 5px;
-            font-family: Arial, sans-serif;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         button {
             display: block;
-            margin: 5px 0;
+            margin: 8px 0;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        select {
+            margin: 8px 0;
+            padding: 10px;
+            width: 100%;
+        }
+        #title {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            z-index: 10;
+            font-family: 'Arial', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 <body>
+    <div id="title">ModelX</div> <!-- The title added at the top -->
+
     <div id="ui">
-        <button onclick="addCube()">Add Cube</button>
-        <button onclick="addSphere()">Add Sphere</button>
+        <select id="objectSelect">
+            <option value="cube">Cube</option>
+            <option value="sphere">Sphere</option>
+            <option value="cone">Cone</option>
+            <option value="cylinder">Cylinder</option>
+        </select>
+        <button onclick="addObject()">Add Object</button>
+        <button onclick="resetScene()">Reset Scene</button>
+        <button onclick="scaleObject(1.2)">Scale Up</button>
+        <button onclick="scaleObject(0.8)">Scale Down</button>
+        <button onclick="rotateObject()">Rotate Selected Object</button>
+        <button onclick="changeBackgroundColor()">Change Background Color</button>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/controls/OrbitControls.js"></script> <!-- OrbitControls.js -->
     <script>
         // Set up the scene, camera, and renderer
         const scene = new THREE.Scene();
@@ -36,89 +76,121 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // Add lighting
+        // Lighting
         const light = new THREE.DirectionalLight(0xffffff, 1);
         light.position.set(5, 5, 5).normalize();
         scene.add(light);
+        const ambientLight = new THREE.AmbientLight(0x404040, 1); // Soft ambient light
+        scene.add(ambientLight);
 
-        // Add a grid helper
+        // Grid helper
         const gridHelper = new THREE.GridHelper(10, 10);
         scene.add(gridHelper);
+
+        // Initialize OrbitControls to enable camera rotation
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
         // Variables for object interaction
         let selectedObject = null;
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
 
-        // Function to add a cube
-        function addCube() {
-            const geometry = new THREE.BoxGeometry();
-            const material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff });
-            const cube = new THREE.Mesh(geometry, material);
-            cube.position.set(Math.random() * 5 - 2.5, Math.random() * 5, Math.random() * 5 - 2.5);
-            scene.add(cube);
+        // Function to add a 3D object based on selected type
+        function addObject() {
+            const objectType = document.getElementById("objectSelect").value;
+            let geometry, material;
+
+            // Create geometry and material for the selected object
+            if (objectType === 'cube') {
+                geometry = new THREE.BoxGeometry();
+            } else if (objectType === 'sphere') {
+                geometry = new THREE.SphereGeometry(0.5, 32, 32);
+            } else if (objectType === 'cone') {
+                geometry = new THREE.ConeGeometry(0.5, 1, 32);
+            } else if (objectType === 'cylinder') {
+                geometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 32);
+            }
+            material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff });
+
+            const object = new THREE.Mesh(geometry, material);
+            object.position.set(Math.random() * 5 - 2.5, Math.random() * 5, Math.random() * 5 - 2.5);
+            scene.add(object);
         }
 
-        // Function to add a sphere
-        function addSphere() {
-            const geometry = new THREE.SphereGeometry(0.5, 32, 32);
-            const material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff });
-            const sphere = new THREE.Mesh(geometry, material);
-            sphere.position.set(Math.random() * 5 - 2.5, Math.random() * 5, Math.random() * 5 - 2.5);
-            scene.add(sphere);
+        // Function to reset the scene (remove all objects)
+        function resetScene() {
+            scene.children = [gridHelper, light, ambientLight]; // Keep the grid and lights
+            renderer.renderLists.dispose();
         }
 
-        // Handle mouse down to select an object
-        document.addEventListener('mousedown', (event) => {
-            // Calculate mouse position in normalized device coordinates (-1 to +1)
+        // Function to scale the selected object
+        function scaleObject(factor) {
+            if (selectedObject) {
+                selectedObject.scale.set(selectedObject.scale.x * factor, selectedObject.scale.y * factor, selectedObject.scale.z * factor);
+            }
+        }
+
+        // Function to rotate the selected object
+        function rotateObject() {
+            if (selectedObject) {
+                selectedObject.rotation.x += 0.1;
+                selectedObject.rotation.y += 0.1;
+            }
+        }
+
+        // Function to change the background color of the scene
+        function changeBackgroundColor() {
+            const colors = ['#f0f0f0', '#87CEEB', '#FFD700', '#FF6347', '#98FB98'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            renderer.setClearColor(randomColor);
+        }
+
+        // Handle pointer down (mousedown/touchstart)
+        document.addEventListener('pointerdown', (event) => {
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-            // Raycast to find intersected objects
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(scene.children);
 
-            // Select the first intersected object (if any)
             if (intersects.length > 0) {
                 selectedObject = intersects[0].object;
             }
         });
 
-        // Handle mouse move to move the selected object
-        document.addEventListener('mousemove', (event) => {
+        // Handle pointer move (mousemove/touchmove)
+        document.addEventListener('pointermove', (event) => {
             if (selectedObject) {
-                // Calculate mouse position in normalized device coordinates (-1 to +1)
                 mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
                 mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-                // Update the position of the selected object
                 raycaster.setFromCamera(mouse, camera);
-                const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0); // Ground plane
+                const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
                 const intersection = new THREE.Vector3();
                 raycaster.ray.intersectPlane(plane, intersection);
                 selectedObject.position.copy(intersection);
             }
         });
 
-        // Handle mouse up to release the selected object
-        document.addEventListener('mouseup', () => {
+        // Handle pointer up (mouseup/touchend)
+        document.addEventListener('pointerup', () => {
             selectedObject = null;
         });
 
         // Position the camera
-        camera.position.z = 10;
-        camera.position.y = 5;
+        camera.position.set(10, 5, 10);
         camera.lookAt(0, 0, 0);
 
         // Animation loop
         function animate() {
             requestAnimationFrame(animate);
 
+            // Update controls for camera rotation
+            controls.update(); // Only needed if controls.enableDamping or controls.auto-rotation is enabled
+
             // Render the scene
             renderer.render(scene, camera);
         }
 
-        // Handle window resize
+        // Handle window resizing
         window.addEventListener('resize', () => {
             const width = window.innerWidth;
             const height = window.innerHeight;
