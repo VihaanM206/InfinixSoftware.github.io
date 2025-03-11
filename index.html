@@ -53,7 +53,6 @@
             width: 100%;
             bottom: 0;
         }
-        /* Styling the button */
         .about-button {
             background-color: #007BFF;
             color: white;
@@ -67,7 +66,6 @@
         .about-button:hover {
             background-color: #0056b3;
         }
-        /* Styling for Terms and Conditions section */
         .terms-section, .license-section {
             max-width: 900px;
             margin: 20px auto;
@@ -79,16 +77,34 @@
         .terms-section h2, .license-section h2 {
             color: #007BFF;
         }
+
+        /* Styling for the game section */
+        #game-section {
+            margin-top: 50px;
+            text-align: center;
+        }
+        canvas {
+            border: 2px solid #333;
+            margin-top: 20px;
+        }
+        #ui {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-family: 'Arial', sans-serif;
+            color: #000;
+            z-index: 10;
+        }
+        #ui p {
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Welcome to the Official Site of Infinix Software!</h1>
-        <!-- About button -->
         <button class="about-button" onclick="scrollToAbout()">About</button>
-        <!-- Terms and Conditions button -->
         <button class="about-button" onclick="scrollToTerms()">Terms and Conditions</button>
-        <!-- License button -->
         <button class="about-button" onclick="scrollToLicense()">License</button>
     </header>
 
@@ -101,83 +117,26 @@
     <!-- Terms and Conditions Section -->
     <section id="terms" class="terms-section">
         <h2>Terms and Conditions for InfinixSoftware</h2>
-        <p>Welcome to InfinixSoftware! By accessing or using our services, including but not limited to our website, mobile applications, games, and any related content (collectively referred to as the "Services"), you agree to be bound by these Terms and Conditions ("Terms"). Please read them carefully before using our Services. If you do not agree to these Terms, you may not access or use our Services.</p>
-
-        <h3>1. Acceptance of Terms</h3>
-        <p>By using InfinixSoftware, you confirm that you are at least 13 years old (or the minimum age of digital consent in your jurisdiction) and have the legal capacity to agree to these Terms. If you are under the age of majority in your jurisdiction, you must have the consent of a parent or legal guardian to use our Services.</p>
-
-        <h3>2. Account Registration</h3>
-        <p>To access certain features of our Services, you may be required to create an account. You agree to:</p>
-        <ul>
-            <li>Provide accurate, current, and complete information during registration.</li>
-            <li>Maintain the security of your account credentials and not share them with others.</li>
-            <li>Notify us immediately of any unauthorized use of your account or any other security breach.</li>
-        </ul>
-        <p>InfinixSoftware reserves the right to suspend or terminate your account if you violate these Terms or engage in any fraudulent or harmful activity.</p>
-
-        <h3>3. User Conduct</h3>
-        <p>You agree to use our Services responsibly and in compliance with all applicable laws. You are prohibited from:</p>
-        <ul>
-            <li>Engaging in any activity that disrupts or interferes with the Services.</li>
-            <li>Using cheats, exploits, or unauthorized third-party software to gain an unfair advantage, unless in a server or domain where explicitly allowed.</li>
-            <li>Harassing, bullying, or engaging in hate speech or other harmful behavior toward other users.</li>
-            <li>Uploading or sharing content that is illegal, offensive, or infringes on the rights of others.</li>
-        </ul>
-
-        <h3>4. Intellectual Property</h3>
-        <p>All content, including but not limited to games, graphics, logos, and software, is the property of InfinixSoftware or its licensors and is protected by copyright, trademark, and other intellectual property laws. You may not:</p>
-        <ul>
-            <li>Copy, modify, or distribute our content without prior written consent.</li>
-            <li>Reverse engineer, decompile, or disassemble any part of our Services.</li>
-        </ul>
-
-        <h3>5. In-Game Purchases and Virtual Items</h3>
-        <p>InfinixSoftware may offer in-game purchases, such as virtual currency, items, or subscriptions. By making a purchase, you agree to the following:</p>
-        <ul>
-            <li>All purchases are final and non-refundable, except as required by law.</li>
-            <li>Virtual items have no real-world value and cannot be exchanged for cash or other goods.</li>
-            <li>InfinixSoftware reserves the right to modify or discontinue virtual items at any time.</li>
-        </ul>
-
-        <h3>6. Privacy</h3>
-        <p>Your use of our Services is subject to our Privacy Policy, which explains how we collect, use, and protect your personal information. By using our Services, you consent to the practices described in the Privacy Policy.</p>
-
-        <h3>7. Termination</h3>
-        <p>InfinixSoftware reserves the right to suspend or terminate your access to the Services at any time, with or without notice, for any reason, including but not limited to violations of these Terms.</p>
-
-        <h3>8. Limitation of Liability</h3>
-        <p>To the fullest extent permitted by law, InfinixSoftware shall not be liable for any indirect, incidental, or consequential damages arising out of your use of the Services. Our total liability to you for any claims shall not exceed the amount you have paid to us in the past six months.</p>
-
-        <h3>9. Changes to Terms</h3>
-        <p>InfinixSoftware may update these Terms from time to time. We will notify you of any material changes by posting the updated Terms on our website or through other communication methods. Your continued use of the Services after such changes constitutes your acceptance of the revised Terms.</p>
-
-        <h3>10. Contact Us</h3>
-        <p>If you have any questions or concerns about these Terms, please contact us at:</p>
-        <p>Email: vihaan.wva@gmail.com, apoorvpatil45@gmail.com</p>
-
-        <p>By using InfinixSoftware, you acknowledge that you have read, understood, and agreed to these Terms and Conditions. Thank you for choosing InfinixSoftware!</p>
-        <p>Last Updated: March 1, 2025</p>
+        <p>Welcome to InfinixSoftware! By accessing or using our services...</p>
     </section>
 
     <!-- License Section -->
     <section id="license" class="license-section">
         <h2>MIT License</h2>
-        <p>Copyright (c) 2025 VihaanM206</p>
-        <p>Permission is hereby granted, free of charge, to any person obtaining a copy
-            of this software and associated documentation files (the "Software"), to deal
-            in the Software without restriction, including without limitation the rights
-            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-            copies of the Software, and to permit persons to whom the Software is
-            furnished to do so, subject to the following conditions:</p>
-        <p>The above copyright notice and this permission notice shall be included in all
-            copies or substantial portions of the Software.</p>
-        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-            SOFTWARE.</p>
+        <p>Copyright (c) 2025 VihaanM206...</p>
+    </section>
+
+    <!-- New Game Section -->
+    <section id="game-section">
+        <h2>Play the House Builder Game!</h2>
+        <p>Click to build houses and roads. See how many NPCs you can help reach their destination!</p>
+
+        <canvas id="gameCanvas" width="1900" height="1100"></canvas>
+
+        <div id="ui">
+            <p>Money: $<span id="money">1000</span></p>
+            <p>Left-click to build a house (Cost $100) | Right-click to build a road (Cost $200)</p>
+        </div>
     </section>
 
     <footer>
@@ -185,6 +144,164 @@
     </footer>
 
     <script>
+        // JavaScript Game Code - Start
+
+        // Game Constants
+        const SCREEN_WIDTH = 1900;
+        const SCREEN_HEIGHT = 1100;
+        const GRID_COLS = 38;
+        const GRID_ROWS = 22;
+        const GRID_SIZE_X = SCREEN_WIDTH / GRID_COLS;
+        const GRID_SIZE_Y = SCREEN_HEIGHT / GRID_ROWS;
+        const HOUSE_SIZE_X = GRID_SIZE_X - 10;
+        const HOUSE_SIZE_Y = GRID_SIZE_Y - 10;
+        const HOUSE_COST = 100;
+        const ROAD_COST = 200;
+        const HOUSE_INCOME = 10;
+        const NPC_DEATH_TIME = 15;
+
+        // Colors
+        const WHITE = 'white';
+        const GRAY = '#a9a9a9';
+        const BLUE = 'blue';
+        const BROWN = '#8b4513';
+        const ROAD_COLOR = BROWN;
+        const NPC_COLOR = 'red';
+
+        // Set up the canvas
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Game Variables
+        let money = 1000;
+        let houses = [];
+        let roads = [];
+        let npcs = [];
+        let lastIncomeTime = Date.now();
+
+        // NPC Class
+        class NPC {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = 15;
+                this.speed = 1;
+                this.destination = null;
+                this.creationTime = Date.now();
+                this.timeSinceCreation = 0;
+            }
+
+            move() {
+                if (!this.destination) {
+                    this.destination = [Math.floor(Math.random() * GRID_COLS) * GRID_SIZE_X, Math.floor(Math.random() * GRID_ROWS) * GRID_SIZE_Y];
+                }
+
+                const dx = this.destination[0] - this.x;
+                const dy = this.destination[1] - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance > this.speed) {
+                    this.x += (dx / distance) * this.speed;
+                    this.y += (dy / distance) * this.speed;
+                } else {
+                    this.x = this.destination[0];
+                    this.y = this.destination[1];
+                    this.destination = null;
+                }
+            }
+
+            update() {
+                this.move();
+                this.timeSinceCreation = Date.now() - this.creationTime;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = NPC_COLOR;
+                ctx.fill();
+            }
+        }
+
+        // Game Drawing Functions
+        function drawGrid() {
+            for (let x = 0; x < SCREEN_WIDTH; x += GRID_SIZE_X) {
+                for (let y = 0; y < SCREEN_HEIGHT; y += GRID_SIZE_Y) {
+                    ctx.strokeStyle = GRAY;
+                    ctx.strokeRect(x, y, GRID_SIZE_X, GRID_SIZE_Y);
+                }
+            }
+        }
+
+        function drawHouses() {
+            for (const house of houses) {
+                ctx.fillStyle = BLUE;
+                ctx.fillRect(house.x, house.y, HOUSE_SIZE_X, HOUSE_SIZE_Y);
+            }
+        }
+
+        function drawRoads() {
+            for (const road of roads) {
+                ctx.fillStyle = ROAD_COLOR;
+                ctx.fillRect(road.x, road.y, GRID_SIZE_X, GRID_SIZE_Y);
+            }
+        }
+
+        function drawUI() {
+            document.getElementById('money').innerText = money;
+        }
+
+        // Handle mouse clicks for house and road placement
+        canvas.addEventListener('mousedown', (e) => {
+            const gridX = Math.floor(e.offsetX / GRID_SIZE_X) * GRID_SIZE_X;
+            const gridY = Math.floor(e.offsetY / GRID_SIZE_Y) * GRID_SIZE_Y;
+
+            if (e.button === 0) { // Left-click for house
+                if (money >= HOUSE_COST) {
+                    houses.push({ x: gridX + 5, y: gridY + 5 });
+                    money -= HOUSE_COST;
+                }
+            } else if (e.button === 2) { // Right-click for road
+                if (money >= ROAD_COST) {
+                    roads.push({ x: gridX, y: gridY });
+                    money -= ROAD_COST;
+                }
+            }
+        });
+
+        // Update and Draw the game every frame
+        function gameLoop() {
+            ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            drawGrid();
+            drawHouses();
+            drawRoads();
+            drawUI();
+
+            // Update NPCs
+            if (Date.now() - lastIncomeTime > 1000) {
+                lastIncomeTime = Date.now();
+                npcs.push(new NPC(Math.random() * SCREEN_WIDTH, Math.random() * SCREEN_HEIGHT));
+            }
+
+            for (let i = npcs.length - 1; i >= 0; i--) {
+                const npc = npcs[i];
+                npc.update();
+                npc.draw();
+
+                if (npc.timeSinceCreation >= NPC_DEATH_TIME * 1000) {
+                    npcs.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Start the game loop
+        gameLoop();
+
+        // Disable right-click menu
+        canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
         // JavaScript function to scroll to the About Us section smoothly
         function scrollToAbout() {
             document.getElementById("about").scrollIntoView({ behavior: 'smooth' });
