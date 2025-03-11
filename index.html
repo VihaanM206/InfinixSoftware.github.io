@@ -68,7 +68,7 @@
             background-color: #0056b3;
         }
         /* Styling for Terms and Conditions section */
-        .terms-section {
+        .terms-section, .license-section {
             max-width: 900px;
             margin: 20px auto;
             padding: 20px;
@@ -76,7 +76,7 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-        .terms-section h2 {
+        .terms-section h2, .license-section h2 {
             color: #007BFF;
         }
     </style>
@@ -88,6 +88,8 @@
         <button class="about-button" onclick="scrollToAbout()">About</button>
         <!-- Terms and Conditions button -->
         <button class="about-button" onclick="scrollToTerms()">Terms and Conditions</button>
+        <!-- License button -->
+        <button class="about-button" onclick="scrollToLicense()">License</button>
     </header>
 
     <section id="about">
@@ -157,6 +159,27 @@
         <p>Last Updated: March 1, 2025</p>
     </section>
 
+    <!-- License Section -->
+    <section id="license" class="license-section">
+        <h2>MIT License</h2>
+        <p>Copyright (c) 2025 VihaanM206</p>
+        <p>Permission is hereby granted, free of charge, to any person obtaining a copy
+            of this software and associated documentation files (the "Software"), to deal
+            in the Software without restriction, including without limitation the rights
+            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+            copies of the Software, and to permit persons to whom the Software is
+            furnished to do so, subject to the following conditions:</p>
+        <p>The above copyright notice and this permission notice shall be included in all
+            copies or substantial portions of the Software.</p>
+        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+            SOFTWARE.</p>
+    </section>
+
     <footer>
         <p>&copy; 2025 Infinix Software. All rights reserved.</p>
     </footer>
@@ -170,6 +193,11 @@
         // JavaScript function to scroll to the Terms and Conditions section smoothly
         function scrollToTerms() {
             document.getElementById("terms").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // JavaScript function to scroll to the License section smoothly
+        function scrollToLicense() {
+            document.getElementById("license").scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
