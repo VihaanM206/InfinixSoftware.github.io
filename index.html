@@ -27,23 +27,6 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-        .announcements {
-            margin-top: 20px;
-        }
-        .announcement {
-            background-color: #e9f7fe;
-            border-left: 4px solid #007BFF;
-            padding: 10px;
-            margin-bottom: 15px;
-        }
-        .announcement h2 {
-            margin: 0;
-            color: #007BFF;
-        }
-        .announcement p {
-            margin: 5px 0 0;
-            color: #555;
-        }
         footer {
             text-align: center;
             padding: 10px;
@@ -66,20 +49,9 @@
         .about-button:hover {
             background-color: #0056b3;
         }
-        .terms-section, .license-section {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        .terms-section h2, .license-section h2 {
-            color: #007BFF;
-        }
-
-        /* Styling for the game section */
+        /* Hide the game section initially */
         #game-section {
+            display: none;
             margin-top: 50px;
             text-align: center;
         }
@@ -106,6 +78,8 @@
         <button class="about-button" onclick="scrollToAbout()">About</button>
         <button class="about-button" onclick="scrollToTerms()">Terms and Conditions</button>
         <button class="about-button" onclick="scrollToLicense()">License</button>
+        <!-- Play Now Button -->
+        <button class="about-button" onclick="startGame()">Play Now</button>
     </header>
 
     <section id="about">
@@ -129,7 +103,7 @@
     <!-- New Game Section -->
     <section id="game-section">
         <h2>Play the House Builder Game!</h2>
-        <p>Click to build houses and roads. See how many NPCs you can help reach their destination!</p>
+        <p>Click to build houses and roads. See how many you can place with your money!</p>
 
         <canvas id="gameCanvas" width="1900" height="1100"></canvas>
 
@@ -144,7 +118,10 @@
     </footer>
 
     <script>
-        // JavaScript Game Code - Start
+        // Function to show the game section
+        function startGame() {
+            document.getElementById("game-section").style.display = "block"; // Show the game
+        }
 
         // Game Constants
         const SCREEN_WIDTH = 1900;
@@ -157,16 +134,12 @@
         const HOUSE_SIZE_Y = GRID_SIZE_Y - 10;
         const HOUSE_COST = 100;
         const ROAD_COST = 200;
-        const HOUSE_INCOME = 10;
-        const NPC_DEATH_TIME = 15;
 
         // Colors
         const WHITE = 'white';
         const GRAY = '#a9a9a9';
         const BLUE = 'blue';
         const BROWN = '#8b4513';
-        const ROAD_COLOR = BROWN;
-        const NPC_COLOR = 'red';
 
         // Set up the canvas
         const canvas = document.getElementById('gameCanvas');
@@ -176,52 +149,6 @@
         let money = 1000;
         let houses = [];
         let roads = [];
-        let npcs = [];
-        let lastIncomeTime = Date.now();
-
-        // NPC Class
-        class NPC {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.size = 15;
-                this.speed = 1;
-                this.destination = null;
-                this.creationTime = Date.now();
-                this.timeSinceCreation = 0;
-            }
-
-            move() {
-                if (!this.destination) {
-                    this.destination = [Math.floor(Math.random() * GRID_COLS) * GRID_SIZE_X, Math.floor(Math.random() * GRID_ROWS) * GRID_SIZE_Y];
-                }
-
-                const dx = this.destination[0] - this.x;
-                const dy = this.destination[1] - this.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance > this.speed) {
-                    this.x += (dx / distance) * this.speed;
-                    this.y += (dy / distance) * this.speed;
-                } else {
-                    this.x = this.destination[0];
-                    this.y = this.destination[1];
-                    this.destination = null;
-                }
-            }
-
-            update() {
-                this.move();
-                this.timeSinceCreation = Date.now() - this.creationTime;
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = NPC_COLOR;
-                ctx.fill();
-            }
-        }
 
         // Game Drawing Functions
         function drawGrid() {
@@ -242,7 +169,7 @@
 
         function drawRoads() {
             for (const road of roads) {
-                ctx.fillStyle = ROAD_COLOR;
+                ctx.fillStyle = BROWN;
                 ctx.fillRect(road.x, road.y, GRID_SIZE_X, GRID_SIZE_Y);
             }
         }
@@ -276,22 +203,6 @@
             drawHouses();
             drawRoads();
             drawUI();
-
-            // Update NPCs
-            if (Date.now() - lastIncomeTime > 1000) {
-                lastIncomeTime = Date.now();
-                npcs.push(new NPC(Math.random() * SCREEN_WIDTH, Math.random() * SCREEN_HEIGHT));
-            }
-
-            for (let i = npcs.length - 1; i >= 0; i--) {
-                const npc = npcs[i];
-                npc.update();
-                npc.draw();
-
-                if (npc.timeSinceCreation >= NPC_DEATH_TIME * 1000) {
-                    npcs.splice(i, 1);
-                }
-            }
 
             requestAnimationFrame(gameLoop);
         }
