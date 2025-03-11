@@ -53,43 +53,58 @@
             width: 100%;
             bottom: 0;
         }
-        /* Styling the button */
-        .about-button {
-            background-color: #007BFF;
+        /* Styling for the 3D Model */
+        #title {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            z-index: 10;
+            font-family: 'Arial', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        #ui {
+            position: absolute;
+            top: 70px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            display: block;
+            margin: 8px 0;
+            padding: 10px;
+            background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
             border-radius: 5px;
-            margin-top: 20px;
+            font-size: 14px;
+            cursor: pointer;
         }
-        .about-button:hover {
-            background-color: #0056b3;
+        button:hover {
+            background-color: #45a049;
         }
-        /* Styling for Terms and Conditions section */
-        .terms-section {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        .terms-section h2 {
-            color: #007BFF;
+        select {
+            margin: 8px 0;
+            padding: 10px;
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <header>
         <h1>Welcome to the Official Site of Infinix Software!</h1>
-        <!-- About button -->
         <button class="about-button" onclick="scrollToAbout()">About</button>
-        <!-- Terms and Conditions button -->
         <button class="about-button" onclick="scrollToTerms()">Terms and Conditions</button>
+        <button class="about-button" onclick="scrollToLicense()">License</button>
+        <button class="about-button" onclick="scrollToModelX()">3D Modeling Program</button>
     </header>
 
+    <!-- About Section -->
     <section id="about">
         <h2>About Us</h2>
         <p>Our products help streamline processes, increase productivity, and enhance user experiences.</p>
@@ -99,62 +114,168 @@
     <!-- Terms and Conditions Section -->
     <section id="terms" class="terms-section">
         <h2>Terms and Conditions for InfinixSoftware</h2>
-        <p>Welcome to InfinixSoftware! By accessing or using our services, including but not limited to our website, mobile applications, games, and any related content (collectively referred to as the "Services"), you agree to be bound by these Terms and Conditions ("Terms"). Please read them carefully before using our Services. If you do not agree to these Terms, you may not access or use our Services.</p>
+        <!-- Add your terms and conditions here as shown earlier -->
+    </section>
 
-        <h3>1. Acceptance of Terms</h3>
-        <p>By using InfinixSoftware, you confirm that you are at least 13 years old (or the minimum age of digital consent in your jurisdiction) and have the legal capacity to agree to these Terms. If you are under the age of majority in your jurisdiction, you must have the consent of a parent or legal guardian to use our Services.</p>
+    <!-- License Section -->
+    <section id="license" class="license-section">
+        <h2>MIT License</h2>
+        <p>Copyright (c) 2025 VihaanM206</p>
+        <p>Permission is hereby granted, free of charge, to any person obtaining a copy
+            of this software and associated documentation files (the "Software"), to deal
+            in the Software without restriction, including without limitation the rights
+            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+            copies of the Software, and to permit persons to whom the Software is
+            furnished to do so, subject to the following conditions:</p>
+        <p>The above copyright notice and this permission notice shall be included in all
+            copies or substantial portions of the Software.</p>
+        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+            SOFTWARE.</p>
+    </section>
 
-        <h3>2. Account Registration</h3>
-        <p>To access certain features of our Services, you may be required to create an account. You agree to:</p>
-        <ul>
-            <li>Provide accurate, current, and complete information during registration.</li>
-            <li>Maintain the security of your account credentials and not share them with others.</li>
-            <li>Notify us immediately of any unauthorized use of your account or any other security breach.</li>
-        </ul>
-        <p>InfinixSoftware reserves the right to suspend or terminate your account if you violate these Terms or engage in any fraudulent or harmful activity.</p>
+    <!-- 3D Modeling Section (ModelX) -->
+    <section id="modelx" style="width: 100%; height: 100vh; position: relative;">
+        <div id="title">ModelX</div>
+        <div id="ui">
+            <select id="objectSelect">
+                <option value="cube">Cube</option>
+                <option value="sphere">Sphere</option>
+                <option value="cone">Cone</option>
+                <option value="cylinder">Cylinder</option>
+            </select>
+            <button onclick="addObject()">Add Object</button>
+            <button onclick="resetScene()">Reset Scene</button>
+            <button onclick="scaleObject(1.2)">Scale Up</button>
+            <button onclick="scaleObject(0.8)">Scale Down</button>
+            <button onclick="rotateObject()">Rotate Selected Object</button>
+            <button onclick="changeBackgroundColor()">Change Background Color</button>
+        </div>
 
-        <h3>3. User Conduct</h3>
-        <p>You agree to use our Services responsibly and in compliance with all applicable laws. You are prohibited from:</p>
-        <ul>
-            <li>Engaging in any activity that disrupts or interferes with the Services.</li>
-            <li>Using cheats, exploits, or unauthorized third-party software to gain an unfair advantage, unless in a server or domain where explicitly allowed.</li>
-            <li>Harassing, bullying, or engaging in hate speech or other harmful behavior toward other users.</li>
-            <li>Uploading or sharing content that is illegal, offensive, or infringes on the rights of others.</li>
-        </ul>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/controls/OrbitControls.js"></script>
+        <script>
+            // Set up the scene, camera, and renderer
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById("modelx").appendChild(renderer.domElement);
 
-        <h3>4. Intellectual Property</h3>
-        <p>All content, including but not limited to games, graphics, logos, and software, is the property of InfinixSoftware or its licensors and is protected by copyright, trademark, and other intellectual property laws. You may not:</p>
-        <ul>
-            <li>Copy, modify, or distribute our content without prior written consent.</li>
-            <li>Reverse engineer, decompile, or disassemble any part of our Services.</li>
-        </ul>
+            // Lighting
+            const light = new THREE.DirectionalLight(0xffffff, 1);
+            light.position.set(5, 5, 5).normalize();
+            scene.add(light);
+            const ambientLight = new THREE.AmbientLight(0x404040, 1);
+            scene.add(ambientLight);
 
-        <h3>5. In-Game Purchases and Virtual Items</h3>
-        <p>InfinixSoftware may offer in-game purchases, such as virtual currency, items, or subscriptions. By making a purchase, you agree to the following:</p>
-        <ul>
-            <li>All purchases are final and non-refundable, except as required by law.</li>
-            <li>Virtual items have no real-world value and cannot be exchanged for cash or other goods.</li>
-            <li>InfinixSoftware reserves the right to modify or discontinue virtual items at any time.</li>
-        </ul>
+            // Grid helper
+            const gridHelper = new THREE.GridHelper(10, 10);
+            scene.add(gridHelper);
 
-        <h3>6. Privacy</h3>
-        <p>Your use of our Services is subject to our Privacy Policy, which explains how we collect, use, and protect your personal information. By using our Services, you consent to the practices described in the Privacy Policy.</p>
+            // Initialize OrbitControls to enable camera rotation
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-        <h3>7. Termination</h3>
-        <p>InfinixSoftware reserves the right to suspend or terminate your access to the Services at any time, with or without notice, for any reason, including but not limited to violations of these Terms.</p>
+            // Variables for object interaction
+            let selectedObject = null;
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
 
-        <h3>8. Limitation of Liability</h3>
-        <p>To the fullest extent permitted by law, InfinixSoftware shall not be liable for any indirect, incidental, or consequential damages arising out of your use of the Services. Our total liability to you for any claims shall not exceed the amount you have paid to us in the past six months.</p>
+            // Function to add a 3D object based on selected type
+            function addObject() {
+                const objectType = document.getElementById("objectSelect").value;
+                let geometry, material;
 
-        <h3>9. Changes to Terms</h3>
-        <p>InfinixSoftware may update these Terms from time to time. We will notify you of any material changes by posting the updated Terms on our website or through other communication methods. Your continued use of the Services after such changes constitutes your acceptance of the revised Terms.</p>
+                if (objectType === 'cube') {
+                    geometry = new THREE.BoxGeometry();
+                } else if (objectType === 'sphere') {
+                    geometry = new THREE.SphereGeometry(0.5, 32, 32);
+                } else if (objectType === 'cone') {
+                    geometry = new THREE.ConeGeometry(0.5, 1, 32);
+                } else if (objectType === 'cylinder') {
+                    geometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 32);
+                }
+                material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff });
 
-        <h3>10. Contact Us</h3>
-        <p>If you have any questions or concerns about these Terms, please contact us at:</p>
-        <p>Email: vihaan.wva@gmail.com, apoorvpatil45@gmail.com</p>
+                const object = new THREE.Mesh(geometry, material);
+                object.position.set(Math.random() * 5 - 2.5, Math.random() * 5, Math.random() * 5 - 2.5);
+                scene.add(object);
+            }
 
-        <p>By using InfinixSoftware, you acknowledge that you have read, understood, and agreed to these Terms and Conditions. Thank you for choosing InfinixSoftware!</p>
-        <p>Last Updated: March 1, 2025</p>
+            function resetScene() {
+                scene.children = [gridHelper, light, ambientLight];
+                renderer.renderLists.dispose();
+            }
+
+            function scaleObject(factor) {
+                if (selectedObject) {
+                    selectedObject.scale.set(selectedObject.scale.x * factor, selectedObject.scale.y * factor, selectedObject.scale.z * factor);
+                }
+            }
+
+            function rotateObject() {
+                if (selectedObject) {
+                    selectedObject.rotation.x += 0.1;
+                    selectedObject.rotation.y += 0.1;
+                }
+            }
+
+            function changeBackgroundColor() {
+                const colors = ['#f0f0f0', '#87CEEB', '#FFD700', '#FF6347', '#98FB98'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                renderer.setClearColor(randomColor);
+            }
+
+            document.addEventListener('pointerdown', (event) => {
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(scene.children);
+
+                if (intersects.length > 0) {
+                    selectedObject = intersects[0].object;
+                }
+            });
+
+            document.addEventListener('pointermove', (event) => {
+                if (selectedObject) {
+                    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                    raycaster.setFromCamera(mouse, camera);
+                    const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+                    const intersection = new THREE.Vector3();
+                    raycaster.ray.intersectPlane(plane, intersection);
+                    selectedObject.position.copy(intersection);
+                }
+            });
+
+            document.addEventListener('pointerup', () => {
+                selectedObject = null;
+            });
+
+            camera.position.set(10, 5, 10);
+            camera.lookAt(0, 0, 0);
+
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+
+            window.addEventListener('resize', () => {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                renderer.setSize(width, height);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            });
+
+            animate();
+        </script>
     </section>
 
     <footer>
@@ -162,14 +283,20 @@
     </footer>
 
     <script>
-        // JavaScript function to scroll to the About Us section smoothly
         function scrollToAbout() {
             document.getElementById("about").scrollIntoView({ behavior: 'smooth' });
         }
 
-        // JavaScript function to scroll to the Terms and Conditions section smoothly
         function scrollToTerms() {
             document.getElementById("terms").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToLicense() {
+            document.getElementById("license").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToModelX() {
+            document.getElementById("modelx").scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
