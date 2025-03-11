@@ -3,301 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infinix Software Official Site</title>
+    <title>3D Modeling Program - Move Objects</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-        h1 {
-            margin: 0;
-        }
-        section {
-            margin: 20px;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        .announcements {
-            margin-top: 20px;
-        }
-        .announcement {
-            background-color: #e9f7fe;
-            border-left: 4px solid #007BFF;
-            padding: 10px;
-            margin-bottom: 15px;
-        }
-        .announcement h2 {
-            margin: 0;
-            color: #007BFF;
-        }
-        .announcement p {
-            margin: 5px 0 0;
-            color: #555;
-        }
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-        /* Styling for the 3D Model */
-        #title {
+        body { margin: 0; }
+        canvas { display: block; }
+        #ui {
             position: absolute;
             top: 10px;
             left: 10px;
-            font-size: 36px;
-            font-weight: bold;
-            color: #333;
-            z-index: 10;
-            font-family: 'Arial', sans-serif;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        #ui {
-            position: absolute;
-            top: 70px;
-            left: 10px;
             background: rgba(255, 255, 255, 0.8);
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
         }
         button {
             display: block;
-            margin: 8px 0;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        select {
-            margin: 8px 0;
-            padding: 10px;
-            width: 100%;
+            margin: 5px 0;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to the Official Site of Infinix Software!</h1>
-        <button class="about-button" onclick="scrollToAbout()">About</button>
-        <button class="about-button" onclick="scrollToTerms()">Terms and Conditions</button>
-        <button class="about-button" onclick="scrollToLicense()">License</button>
-        <button class="about-button" onclick="scrollToModelX()">3D Modeling Program</button>
-    </header>
+    <div id="ui">
+        <button onclick="addCube()">Add Cube</button>
+        <button onclick="addSphere()">Add Sphere</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Set up the scene, camera, and renderer
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-    <!-- About Section -->
-    <section id="about">
-        <h2>About Us</h2>
-        <p>Our products help streamline processes, increase productivity, and enhance user experiences.</p>
-        <p>Vihaan and Apoorv are two boys who are 10 years old. They started the company on November 20, 2024. Genius Gaems, a branch of Nexus, was started on February 14, 2025.</p>
-    </section>
+        // Add lighting
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(5, 5, 5).normalize();
+        scene.add(light);
 
-    <!-- Terms and Conditions Section -->
-    <section id="terms" class="terms-section">
-        <h2>Terms and Conditions for InfinixSoftware</h2>
-        <!-- Add your terms and conditions here as shown earlier -->
-    </section>
+        // Add a grid helper
+        const gridHelper = new THREE.GridHelper(10, 10);
+        scene.add(gridHelper);
 
-    <!-- License Section -->
-    <section id="license" class="license-section">
-        <h2>MIT License</h2>
-        <p>Copyright (c) 2025 VihaanM206</p>
-        <p>Permission is hereby granted, free of charge, to any person obtaining a copy
-            of this software and associated documentation files (the "Software"), to deal
-            in the Software without restriction, including without limitation the rights
-            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-            copies of the Software, and to permit persons to whom the Software is
-            furnished to do so, subject to the following conditions:</p>
-        <p>The above copyright notice and this permission notice shall be included in all
-            copies or substantial portions of the Software.</p>
-        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-            SOFTWARE.</p>
-    </section>
+        // Variables for object interaction
+        let selectedObject = null;
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
 
-    <!-- 3D Modeling Section (ModelX) -->
-    <section id="modelx" style="width: 100%; height: 100vh; position: relative;">
-        <div id="title">ModelX</div>
-        <div id="ui">
-            <select id="objectSelect">
-                <option value="cube">Cube</option>
-                <option value="sphere">Sphere</option>
-                <option value="cone">Cone</option>
-                <option value="cylinder">Cylinder</option>
-            </select>
-            <button onclick="addObject()">Add Object</button>
-            <button onclick="resetScene()">Reset Scene</button>
-            <button onclick="scaleObject(1.2)">Scale Up</button>
-            <button onclick="scaleObject(0.8)">Scale Down</button>
-            <button onclick="rotateObject()">Rotate Selected Object</button>
-            <button onclick="changeBackgroundColor()">Change Background Color</button>
-        </div>
+        // Function to add a cube
+        function addCube() {
+            const geometry = new THREE.BoxGeometry();
+            const material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff });
+            const cube = new THREE.Mesh(geometry, material);
+            cube.position.set(Math.random() * 5 - 2.5, Math.random() * 5, Math.random() * 5 - 2.5);
+            scene.add(cube);
+        }
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/controls/OrbitControls.js"></script>
-        <script>
-            // Set up the scene, camera, and renderer
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.getElementById("modelx").appendChild(renderer.domElement);
+        // Function to add a sphere
+        function addSphere() {
+            const geometry = new THREE.SphereGeometry(0.5, 32, 32);
+            const material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff });
+            const sphere = new THREE.Mesh(geometry, material);
+            sphere.position.set(Math.random() * 5 - 2.5, Math.random() * 5, Math.random() * 5 - 2.5);
+            scene.add(sphere);
+        }
 
-            // Lighting
-            const light = new THREE.DirectionalLight(0xffffff, 1);
-            light.position.set(5, 5, 5).normalize();
-            scene.add(light);
-            const ambientLight = new THREE.AmbientLight(0x404040, 1);
-            scene.add(ambientLight);
+        // Handle mouse down to select an object
+        document.addEventListener('mousedown', (event) => {
+            // Calculate mouse position in normalized device coordinates (-1 to +1)
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-            // Grid helper
-            const gridHelper = new THREE.GridHelper(10, 10);
-            scene.add(gridHelper);
+            // Raycast to find intersected objects
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(scene.children);
 
-            // Initialize OrbitControls to enable camera rotation
-            const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
-            // Variables for object interaction
-            let selectedObject = null;
-            const raycaster = new THREE.Raycaster();
-            const mouse = new THREE.Vector2();
-
-            // Function to add a 3D object based on selected type
-            function addObject() {
-                const objectType = document.getElementById("objectSelect").value;
-                let geometry, material;
-
-                if (objectType === 'cube') {
-                    geometry = new THREE.BoxGeometry();
-                } else if (objectType === 'sphere') {
-                    geometry = new THREE.SphereGeometry(0.5, 32, 32);
-                } else if (objectType === 'cone') {
-                    geometry = new THREE.ConeGeometry(0.5, 1, 32);
-                } else if (objectType === 'cylinder') {
-                    geometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 32);
-                }
-                material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff });
-
-                const object = new THREE.Mesh(geometry, material);
-                object.position.set(Math.random() * 5 - 2.5, Math.random() * 5, Math.random() * 5 - 2.5);
-                scene.add(object);
+            // Select the first intersected object (if any)
+            if (intersects.length > 0) {
+                selectedObject = intersects[0].object;
             }
+        });
 
-            function resetScene() {
-                scene.children = [gridHelper, light, ambientLight];
-                renderer.renderLists.dispose();
-            }
-
-            function scaleObject(factor) {
-                if (selectedObject) {
-                    selectedObject.scale.set(selectedObject.scale.x * factor, selectedObject.scale.y * factor, selectedObject.scale.z * factor);
-                }
-            }
-
-            function rotateObject() {
-                if (selectedObject) {
-                    selectedObject.rotation.x += 0.1;
-                    selectedObject.rotation.y += 0.1;
-                }
-            }
-
-            function changeBackgroundColor() {
-                const colors = ['#f0f0f0', '#87CEEB', '#FFD700', '#FF6347', '#98FB98'];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                renderer.setClearColor(randomColor);
-            }
-
-            document.addEventListener('pointerdown', (event) => {
+        // Handle mouse move to move the selected object
+        document.addEventListener('mousemove', (event) => {
+            if (selectedObject) {
+                // Calculate mouse position in normalized device coordinates (-1 to +1)
                 mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
                 mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+                // Update the position of the selected object
                 raycaster.setFromCamera(mouse, camera);
-                const intersects = raycaster.intersectObjects(scene.children);
-
-                if (intersects.length > 0) {
-                    selectedObject = intersects[0].object;
-                }
-            });
-
-            document.addEventListener('pointermove', (event) => {
-                if (selectedObject) {
-                    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-                    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-                    raycaster.setFromCamera(mouse, camera);
-                    const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
-                    const intersection = new THREE.Vector3();
-                    raycaster.ray.intersectPlane(plane, intersection);
-                    selectedObject.position.copy(intersection);
-                }
-            });
-
-            document.addEventListener('pointerup', () => {
-                selectedObject = null;
-            });
-
-            camera.position.set(10, 5, 10);
-            camera.lookAt(0, 0, 0);
-
-            function animate() {
-                requestAnimationFrame(animate);
-                controls.update();
-                renderer.render(scene, camera);
+                const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0); // Ground plane
+                const intersection = new THREE.Vector3();
+                raycaster.ray.intersectPlane(plane, intersection);
+                selectedObject.position.copy(intersection);
             }
+        });
 
-            window.addEventListener('resize', () => {
-                const width = window.innerWidth;
-                const height = window.innerHeight;
-                renderer.setSize(width, height);
-                camera.aspect = width / height;
-                camera.updateProjectionMatrix();
-            });
+        // Handle mouse up to release the selected object
+        document.addEventListener('mouseup', () => {
+            selectedObject = null;
+        });
 
-            animate();
-        </script>
-    </section>
+        // Position the camera
+        camera.position.z = 10;
+        camera.position.y = 5;
+        camera.lookAt(0, 0, 0);
 
-    <footer>
-        <p>&copy; 2025 Infinix Software. All rights reserved.</p>
-    </footer>
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
 
-    <script>
-        function scrollToAbout() {
-            document.getElementById("about").scrollIntoView({ behavior: 'smooth' });
+            // Render the scene
+            renderer.render(scene, camera);
         }
 
-        function scrollToTerms() {
-            document.getElementById("terms").scrollIntoView({ behavior: 'smooth' });
-        }
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });
 
-        function scrollToLicense() {
-            document.getElementById("license").scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function scrollToModelX() {
-            document.getElementById("modelx").scrollIntoView({ behavior: 'smooth' });
-        }
+        // Start the animation loop
+        animate();
     </script>
 </body>
 </html>
