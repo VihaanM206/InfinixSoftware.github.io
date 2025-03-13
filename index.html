@@ -27,23 +27,6 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-        .announcements {
-            margin-top: 20px;
-        }
-        .announcement {
-            background-color: #e9f7fe;
-            border-left: 4px solid #007BFF;
-            padding: 10px;
-            margin-bottom: 15px;
-        }
-        .announcement h2 {
-            margin: 0;
-            color: #007BFF;
-        }
-        .announcement p {
-            margin: 5px 0 0;
-            color: #555;
-        }
         footer {
             text-align: center;
             padding: 10px;
@@ -53,45 +36,18 @@
             width: 100%;
             bottom: 0;
         }
-        /* Styling for the 3D Model */
-        #title {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: 36px;
-            font-weight: bold;
-            color: #333;
-            z-index: 10;
-            font-family: 'Arial', sans-serif;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        #ui {
-            position: absolute;
-            top: 70px;
-            left: 10px;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        button {
-            display: block;
-            margin: 8px 0;
-            padding: 10px;
-            background-color: #4CAF50;
+        .about-button {
+            background-color: #007BFF;
             color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 14px;
+            padding: 10px 20px;
+            font-size: 16px;
             cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
         }
-        button:hover {
-            background-color: #45a049;
-        }
-        select {
-            margin: 8px 0;
-            padding: 10px;
-            width: 100%;
+        .about-button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -101,10 +57,8 @@
         <button class="about-button" onclick="scrollToAbout()">About</button>
         <button class="about-button" onclick="scrollToTerms()">Terms and Conditions</button>
         <button class="about-button" onclick="scrollToLicense()">License</button>
-        <button class="about-button" onclick="scrollToModelX()">3D Modeling Program</button>
     </header>
 
-    <!-- About Section -->
     <section id="about">
         <h2>About Us</h2>
         <p>Our products help streamline processes, increase productivity, and enhance user experiences.</p>
@@ -114,168 +68,13 @@
     <!-- Terms and Conditions Section -->
     <section id="terms" class="terms-section">
         <h2>Terms and Conditions for InfinixSoftware</h2>
-        <!-- Add your terms and conditions here as shown earlier -->
+        <p>Welcome to InfinixSoftware! By accessing or using our services...</p>
     </section>
 
     <!-- License Section -->
     <section id="license" class="license-section">
         <h2>MIT License</h2>
-        <p>Copyright (c) 2025 VihaanM206</p>
-        <p>Permission is hereby granted, free of charge, to any person obtaining a copy
-            of this software and associated documentation files (the "Software"), to deal
-            in the Software without restriction, including without limitation the rights
-            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-            copies of the Software, and to permit persons to whom the Software is
-            furnished to do so, subject to the following conditions:</p>
-        <p>The above copyright notice and this permission notice shall be included in all
-            copies or substantial portions of the Software.</p>
-        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-            SOFTWARE.</p>
-    </section>
-
-    <!-- 3D Modeling Section (ModelX) -->
-    <section id="modelx" style="width: 100%; height: 100vh; position: relative;">
-        <div id="title">ModelX</div>
-        <div id="ui">
-            <select id="objectSelect">
-                <option value="cube">Cube</option>
-                <option value="sphere">Sphere</option>
-                <option value="cone">Cone</option>
-                <option value="cylinder">Cylinder</option>
-            </select>
-            <button onclick="addObject()">Add Object</button>
-            <button onclick="resetScene()">Reset Scene</button>
-            <button onclick="scaleObject(1.2)">Scale Up</button>
-            <button onclick="scaleObject(0.8)">Scale Down</button>
-            <button onclick="rotateObject()">Rotate Selected Object</button>
-            <button onclick="changeBackgroundColor()">Change Background Color</button>
-        </div>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/controls/OrbitControls.js"></script>
-        <script>
-            // Set up the scene, camera, and renderer
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.getElementById("modelx").appendChild(renderer.domElement);
-
-            // Lighting
-            const light = new THREE.DirectionalLight(0xffffff, 1);
-            light.position.set(5, 5, 5).normalize();
-            scene.add(light);
-            const ambientLight = new THREE.AmbientLight(0x404040, 1);
-            scene.add(ambientLight);
-
-            // Grid helper
-            const gridHelper = new THREE.GridHelper(10, 10);
-            scene.add(gridHelper);
-
-            // Initialize OrbitControls to enable camera rotation
-            const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
-            // Variables for object interaction
-            let selectedObject = null;
-            const raycaster = new THREE.Raycaster();
-            const mouse = new THREE.Vector2();
-
-            // Function to add a 3D object based on selected type
-            function addObject() {
-                const objectType = document.getElementById("objectSelect").value;
-                let geometry, material;
-
-                if (objectType === 'cube') {
-                    geometry = new THREE.BoxGeometry();
-                } else if (objectType === 'sphere') {
-                    geometry = new THREE.SphereGeometry(0.5, 32, 32);
-                } else if (objectType === 'cone') {
-                    geometry = new THREE.ConeGeometry(0.5, 1, 32);
-                } else if (objectType === 'cylinder') {
-                    geometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 32);
-                }
-                material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff });
-
-                const object = new THREE.Mesh(geometry, material);
-                object.position.set(Math.random() * 5 - 2.5, Math.random() * 5, Math.random() * 5 - 2.5);
-                scene.add(object);
-            }
-
-            function resetScene() {
-                scene.children = [gridHelper, light, ambientLight];
-                renderer.renderLists.dispose();
-            }
-
-            function scaleObject(factor) {
-                if (selectedObject) {
-                    selectedObject.scale.set(selectedObject.scale.x * factor, selectedObject.scale.y * factor, selectedObject.scale.z * factor);
-                }
-            }
-
-            function rotateObject() {
-                if (selectedObject) {
-                    selectedObject.rotation.x += 0.1;
-                    selectedObject.rotation.y += 0.1;
-                }
-            }
-
-            function changeBackgroundColor() {
-                const colors = ['#f0f0f0', '#87CEEB', '#FFD700', '#FF6347', '#98FB98'];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                renderer.setClearColor(randomColor);
-            }
-
-            document.addEventListener('pointerdown', (event) => {
-                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-                raycaster.setFromCamera(mouse, camera);
-                const intersects = raycaster.intersectObjects(scene.children);
-
-                if (intersects.length > 0) {
-                    selectedObject = intersects[0].object;
-                }
-            });
-
-            document.addEventListener('pointermove', (event) => {
-                if (selectedObject) {
-                    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-                    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-                    raycaster.setFromCamera(mouse, camera);
-                    const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
-                    const intersection = new THREE.Vector3();
-                    raycaster.ray.intersectPlane(plane, intersection);
-                    selectedObject.position.copy(intersection);
-                }
-            });
-
-            document.addEventListener('pointerup', () => {
-                selectedObject = null;
-            });
-
-            camera.position.set(10, 5, 10);
-            camera.lookAt(0, 0, 0);
-
-            function animate() {
-                requestAnimationFrame(animate);
-                controls.update();
-                renderer.render(scene, camera);
-            }
-
-            window.addEventListener('resize', () => {
-                const width = window.innerWidth;
-                const height = window.innerHeight;
-                renderer.setSize(width, height);
-                camera.aspect = width / height;
-                camera.updateProjectionMatrix();
-            });
-
-            animate();
-        </script>
+        <p>Copyright (c) 2025 VihaanM206...</p>
     </section>
 
     <footer>
@@ -283,20 +82,19 @@
     </footer>
 
     <script>
+        // JavaScript function to scroll to the About Us section smoothly
         function scrollToAbout() {
             document.getElementById("about").scrollIntoView({ behavior: 'smooth' });
         }
 
+        // JavaScript function to scroll to the Terms and Conditions section smoothly
         function scrollToTerms() {
             document.getElementById("terms").scrollIntoView({ behavior: 'smooth' });
         }
 
+        // JavaScript function to scroll to the License section smoothly
         function scrollToLicense() {
             document.getElementById("license").scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function scrollToModelX() {
-            document.getElementById("modelx").scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
