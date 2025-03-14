@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infinix Software Official Site</title>
+    <title>Infinix Software</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,219 +15,119 @@
         header {
             background-color: #333;
             color: white;
+            padding: 10px 0;
             text-align: center;
-            padding: 20px;
         }
-        h1 {
-            margin: 0;
+        nav {
+            background-color: #444;
+            overflow: hidden;
         }
-        section {
-            margin: 20px;
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #575757;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        .about, .services, .contact, .updates {
             padding: 20px;
+            margin: 20px 0;
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        .about h2, .services h2, .contact h2, .updates h2 {
+            color: #333;
         }
         footer {
-            text-align: center;
-            padding: 10px;
             background-color: #333;
             color: white;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-        .about-button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        .about-button:hover {
-            background-color: #0056b3;
-        }
-        /* Hide the game section initially */
-        #game-section {
-            display: none;
-            margin-top: 50px;
             text-align: center;
+            padding: 10px;
+            position: relative;
         }
-        canvas {
-            border: 2px solid #333;
+        .license {
+            background-color: #222;
+            color: #ddd;
+            font-size: 14px;
+            padding: 15px;
             margin-top: 20px;
-        }
-        #ui {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-family: 'Arial', sans-serif;
-            color: #000;
-            z-index: 10;
-        }
-        #ui p {
-            font-size: 18px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
+
     <header>
-        <h1>Welcome to the Official Site of Infinix Software!</h1>
-        <button class="about-button" onclick="scrollToAbout()">About</button>
-        <button class="about-button" onclick="scrollToTerms()">Terms and Conditions</button>
-        <button class="about-button" onclick="scrollToLicense()">License</button>
-        <!-- Play Now Button -->
-        <button class="about-button" onclick="startGame()">Play Now</button>
+        <h1>Welcome to Infinix Software</h1>
+        <p>Your partner in cutting-edge software solutions</p>
     </header>
 
-    <section id="about">
-        <h2>About Us</h2>
-        <p>Our products help streamline processes, increase productivity, and enhance user experiences.</p>
-        <p>Vihaan and Apoorv are two boys who are 10 years old. They started the company on November 20, 2024. </p>
-    </section>
+    <nav>
+        <a href="#about">About Us</a>
+        <a href="#services">Services</a>
+        <a href="#updates">Updates</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-    <!-- Terms and Conditions Section -->
-    <section id="terms" class="terms-section">
-        <h2>Terms and Conditions for InfinixSoftware</h2>
-        <p>Welcome to InfinixSoftware! By accessing or using our services...</p>
-    </section>
+    <div class="container">
+        <section id="about" class="about">
+            <h2>About Us</h2>
+            <p>Infinix Software is a leading provider of innovative software solutions tailored to meet the needs of modern businesses. Our team of experienced developers and designers work together to create cutting-edge applications that drive success and transformation for our clients.</p>
+        </section>
 
-    <!-- License Section -->
-    <section id="license" class="license-section">
-        <h2>MIT License</h2>
-        <p>Copyright (c) 2025 VihaanM206...</p>
-    </section>
+        <section id="services" class="services">
+            <h2>Our Services</h2>
+            <ul>
+                <li>Custom Software Development</li>
+                <li>Mobile App Development</li>
+                <li>Cloud Solutions</li>
+                <li>Enterprise Solutions</li>
+                <li>Software Consulting</li>
+            </ul>
+        </section>
 
-    <!-- New Game Section -->
-    <section id="game-section">
-        <h2>Play the House Builder Game!</h2>
-        <p>Click to build houses and roads. See how many you can place with your money!</p>
+        <section id="updates" class="updates">
+            <h2>Latest Updates</h2>
+            <p>Stay up to date with the latest developments and improvements at Infinix Software.</p>
+            <div>
+                <h3>March 2025: New Software Feature Released</h3>
+                <p>We are excited to announce the release of a new feature in our cloud solutions that will improve scalability and security for our clients. Check out the detailed update on our blog.</p>
+            </div>
+            <div>
+                <h3>February 2025: Mobile App Launch</h3>
+                <p>Our new mobile application is now live! It brings enhanced performance, better UI, and new functionalities to improve your business operations.</p>
+            </div>
+            <div>
+                <h3>January 2025: New Partnership with XYZ Corp</h3>
+                <p>We have partnered with Nuclear Games to bring innovative solutions to the market, combining their expertise in AI with our software development prowess.</p>
+            </div>
+        </section>
 
-        <canvas id="gameCanvas" width="1900" height="1100"></canvas>
-
-        <div id="ui">
-            <p>Money: $<span id="money">1000</span></p>
-            <p>Left-click to build a house (Cost $100) | Right-click to build a road (Cost $200)</p>
-        </div>
-    </section>
+        <section id="contact" class="contact">
+            <h2>Contact Us</h2>
+            <p>If you have any inquiries or would like to start a project, feel free to reach out to us. We're here to help you take your business to the next level with our software solutions!</p>
+            <p>Email: <a href="mailto:vihaan.wva@gmail.com">vihaan.wva@gmail.com</a>, <a href="mailto:apoorvpatil45@gmail.com">apoorvpatil45@gmail.com</a></p>
+            <p>Phone: +1 (123) 456-7890</p>
+        </section>
+    </div>
 
     <footer>
-        <p>&copy; 2025 Infinix Software. All rights reserved.</p>
+        <p>&copy; 2025 Infinix Software. All Rights Reserved.</p>
+        <div class="license">
+            <h3>MIT License</h3>
+            <p>Copyright (c) 2025 VihaanM206</p>
+            <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+            <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+            <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        </div>
     </footer>
 
-    <script>
-        // Function to show the game section
-        function startGame() {
-            document.getElementById("game-section").style.display = "block"; // Show the game
-        }
-
-        // Game Constants
-        const SCREEN_WIDTH = 1900;
-        const SCREEN_HEIGHT = 1100;
-        const GRID_COLS = 38;
-        const GRID_ROWS = 22;
-        const GRID_SIZE_X = SCREEN_WIDTH / GRID_COLS;
-        const GRID_SIZE_Y = SCREEN_HEIGHT / GRID_ROWS;
-        const HOUSE_SIZE_X = GRID_SIZE_X - 10;
-        const HOUSE_SIZE_Y = GRID_SIZE_Y - 10;
-        const HOUSE_COST = 100;
-        const ROAD_COST = 200;
-
-        // Colors
-        const WHITE = 'white';
-        const GRAY = '#a9a9a9';
-        const BLUE = 'blue';
-        const BROWN = '#8b4513';
-
-        // Set up the canvas
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // Game Variables
-        let money = 1000;
-        let houses = [];
-        let roads = [];
-
-        // Game Drawing Functions
-        function drawGrid() {
-            for (let x = 0; x < SCREEN_WIDTH; x += GRID_SIZE_X) {
-                for (let y = 0; y < SCREEN_HEIGHT; y += GRID_SIZE_Y) {
-                    ctx.strokeStyle = GRAY;
-                    ctx.strokeRect(x, y, GRID_SIZE_X, GRID_SIZE_Y);
-                }
-            }
-        }
-
-        function drawHouses() {
-            for (const house of houses) {
-                ctx.fillStyle = BLUE;
-                ctx.fillRect(house.x, house.y, HOUSE_SIZE_X, HOUSE_SIZE_Y);
-            }
-        }
-
-        function drawRoads() {
-            for (const road of roads) {
-                ctx.fillStyle = BROWN;
-                ctx.fillRect(road.x, road.y, GRID_SIZE_X, GRID_SIZE_Y);
-            }
-        }
-
-        function drawUI() {
-            document.getElementById('money').innerText = money;
-        }
-
-        // Handle mouse clicks for house and road placement
-        canvas.addEventListener('mousedown', (e) => {
-            const gridX = Math.floor(e.offsetX / GRID_SIZE_X) * GRID_SIZE_X;
-            const gridY = Math.floor(e.offsetY / GRID_SIZE_Y) * GRID_SIZE_Y;
-
-            if (e.button === 0) { // Left-click for house
-                if (money >= HOUSE_COST) {
-                    houses.push({ x: gridX + 5, y: gridY + 5 });
-                    money -= HOUSE_COST;
-                }
-            } else if (e.button === 2) { // Right-click for road
-                if (money >= ROAD_COST) {
-                    roads.push({ x: gridX, y: gridY });
-                    money -= ROAD_COST;
-                }
-            }
-        });
-
-        // Update and Draw the game every frame
-        function gameLoop() {
-            ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-            drawGrid();
-            drawHouses();
-            drawRoads();
-            drawUI();
-
-            requestAnimationFrame(gameLoop);
-        }
-
-        // Start the game loop
-        gameLoop();
-
-        // Disable right-click menu
-        canvas.addEventListener('contextmenu', (e) => e.preventDefault());
-
-        // JavaScript function to scroll to the About Us section smoothly
-        function scrollToAbout() {
-            document.getElementById("about").scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // JavaScript function to scroll to the Terms and Conditions section smoothly
-        function scrollToTerms() {
-            document.getElementById("terms").scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // JavaScript function to scroll to the License section smoothly
-        function scrollToLicense() {
-            document.getElementById("license").scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
 </body>
 </html>
